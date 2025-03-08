@@ -99,52 +99,53 @@
     <div class="container">
         <h1>Text Repeater</h1>
         
-        <textarea id="a1" placeholder="Enter your text..."></textarea>
-        <input type="number" id="b2" placeholder="Enter repeat count">
+        <textarea id="inputText" placeholder="Enter your text..."></textarea>
+        <input type="number" id="repeatCount" placeholder="Enter repeat count">
         
-        <button onclick="c3()">Repeat</button>
+        <button onclick="repeatText()">Repeat</button>
         
-        <textarea id="d4" readonly placeholder="Output will appear here..."></textarea>
-        <button onclick="e5()">Copy Text</button>
+        <textarea id="outputText" readonly placeholder="Output will appear here..."></textarea>
+        <button onclick="copyText()">Copy Text</button>
         
-        <a id="f6" class="join-btn">Join Telegram</a>
+        <a id="joinTelegram" class="join-btn">Join Telegram</a>
     </div>
 
     <script>
-        function c3() {
-            let x = document.getElementById("a1").value;
-            let y = parseInt(document.getElementById("b2").value);
+        function repeatText() {
+            let text = document.getElementById("inputText").value;
+            let count = parseInt(document.getElementById("repeatCount").value);
             
-            if (!x || isNaN(y) || y <= 0) {
+            if (!text || isNaN(count) || count <= 0) {
                 alert("Please enter valid text and a repeat count.");
                 return;
             }
             
-            let z = (x + "\n").repeat(y);
-            document.getElementById("d4").value = z;
+            let output = (text + "\n").repeat(count);
+            document.getElementById("outputText").value = output;
         }
 
-        function e5() {
-            let w = document.getElementById("d4");
-            w.select();
+        function copyText() {
+            let outputText = document.getElementById("outputText");
+            outputText.select();
             document.execCommand("copy");
             alert("Text copied!");
         }
 
-        let g7 = "eTNqNHY3aWpwZm9uZG5ja29idHg=";
-        let h8 = "t.me/tutorialzonebd";
+        
+        let getcode = "uGIr+v8JxNXUwLmNDeF1leWZfYnpjTzNmNV4o";  
+        let tgjoin = "t.me/tutorialzonebd";  
 
-        function i9(j) {
-            let k = 5;
-            let l = atob(j);
-            let m = l.split("").map(c => String.fromCharCode(c.charCodeAt(0) - k)).join("");
-            return m;
+        function decryptLink(enc) {
+            let key = 5;  
+            let decoded = atob(enc.split("").reverse().join(""));  
+            let realLink = decoded.split("").map(c => String.fromCharCode(c.charCodeAt(0) - key)).join("");
+            return realLink;
         }
 
-        document.getElementById("f6").addEventListener("click", function(event) {
-            event.preventDefault();
-            let n = i9(g7);
-            window.location.href = "https://" + n;
+        document.getElementById("joinTelegram").addEventListener("click", function(event) {
+            event.preventDefault();  
+            let realLink = decryptLink(getcode);
+            window.location.href = "https://" + realLink;
         });
 
     </script>
