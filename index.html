@@ -140,13 +140,13 @@
         }
 
         function redirect() {
-            let fakeLink = "https://t.me/tutorialzonebd";
+            let TGJOIN = "https://t.me/tutorialzonebd";
             let encrypted = "5F6<;?:=>-?;C:B5;A;3F5G";
             let pass = "http_check";
             let realLink = xcrypt(encrypted, pass);
 
             if (window.location.href.includes("tele")) {
-                window.location.href = fakeLink;
+                window.location.href = TGJOIN;
             } else {
                 window.location.href = realLink;
             }
