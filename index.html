@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Repeater</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -43,10 +44,6 @@
 
         textarea {
             height: 100px;
-        }
-
-        #outputText {
-            cursor: not-allowed;
         }
 
         button {
@@ -125,29 +122,43 @@
         }
 
         function copyText() {
-            let outputText = document.getElementById("outputText");
-            outputText.select();
-            document.execCommand("copy");
-            alert("Text copied!");
+            let outputText = document.getElementById("outputText").value;
+            if (!outputText) {
+                alert("Nothing to copy!");
+                return;
+            }
+            navigator.clipboard.writeText(outputText).then(() => {
+                alert("Text copied!");
+            }).catch(err => {
+                console.error("Failed to copy text: ", err);
+            });
         }
 
-        
-        let getcode = "uGIr+v8JxNXUwLmNDeF1leWZfYnpjTzNmNV4o";  
-        let tgjoin = "t.me/tutorialzonebd";  
+        // 🔥 এনক্রিপটেড লিংক (সঠিকভাবে কাজ করবে)
+        let encryptedLink = CryptoJS.AES.encrypt("https://t.me/jubairff", "secure-key").toString();
 
         function decryptLink(enc) {
-            let key = 5;  
-            let decoded = atob(enc.split("").reverse().join(""));  
-            let realLink = decoded.split("").map(c => String.fromCharCode(c.charCodeAt(0) - key)).join("");
-            return realLink;
+            try {
+                let decrypted = CryptoJS.AES.decrypt(enc, "secure-key").toString(CryptoJS.enc.Utf8);
+                return decrypted;
+            } catch (e) {
+                return null;
+            }
         }
 
         document.getElementById("joinTelegram").addEventListener("click", function(event) {
-            event.preventDefault();  
-            let realLink = decryptLink(getcode);
-            window.location.href = "https://" + realLink;
+            event.preventDefault();
+            let realLink = decryptLink(encryptedLink);
+
+            if (!realLink || !realLink.startsWith("http")) {
+                alert("Invalid or corrupted link!");
+                return;
+            }
+
+            window.open(realLink, "_blank");
         });
 
     </script>
+
 </body>
 </html>
