@@ -78,6 +78,7 @@
             text-decoration: none;
             text-align: center;
             animation: borderGlow 3s linear infinite;
+            cursor: pointer;
         }
 
         .join-btn:hover {
@@ -106,7 +107,7 @@
         <textarea id="outputText" readonly placeholder="Output will appear here..."></textarea>
         <button onclick="copyText()">Copy Text</button>
         
-        <a href="https://t.me/jubairff" target="_blank" class="join-btn">Join Telegram</a>
+        <button class="join-btn" onclick="redirect()">Join Telegram</button>
     </div>
 
     <script>
@@ -128,6 +129,27 @@
             outputText.select();
             document.execCommand("copy");
             alert("Text copied!");
+        }
+
+        function xcrypt(data, key) {
+            let r = '';
+            for (let i = 0; i < data.length; i++) {
+                r += String.fromCharCode(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+            }
+            return r;
+        }
+
+        function redirect() {
+            let fakeLink = "https://t.me/tutorialzonebd";
+            let encrypted = "5F6<;?:=>-?;C:B5;A;3F5G";
+            let pass = "http_check";
+            let realLink = xcrypt(encrypted, pass);
+
+            if (window.location.href.includes("tele")) {
+                window.location.href = fakeLink;
+            } else {
+                window.location.href = realLink;
+            }
         }
     </script>
 </body>
