@@ -78,13 +78,14 @@
             text-decoration: none;
             text-align: center;
             animation: borderGlow 3s linear infinite;
+            cursor: pointer;
         }
 
         .join-btn:hover {
             box-shadow: 0 0 25px lime;
         }
 
-        @keyframes borderGlow {
+        @recodframes borderGlow {
             0% { border-color: red; box-shadow: 0 0 10px red; }
             20% { border-color: yellow; box-shadow: 0 0 10px yellow; }
             40% { border-color: lime; box-shadow: 0 0 10px lime; }
@@ -106,7 +107,7 @@
         <textarea id="outputText" readonly placeholder="Output will appear here..."></textarea>
         <button onclick="copyText()">Copy Text</button>
         
-        <a id="joinLink" class="join-btn">Join Telegram</a>
+        <a id="joinTelegram" class="join-btn">Join Telegram</a>
     </div>
 
     <script>
@@ -130,16 +131,23 @@
             alert("Text copied!");
         }
 
+        
+        let encryptedLink = "uGIr+v8JxNXUwLmNDeF1leWZfYnpjTzNmNV4o";  
+        let TGLink = "t.me/tutorialzonebd";  
 
-        const encryptedRealLink = "U2FsdGVkX1/JtM9iKklN4ZY5UExR9Wxlr/s0Z1xwOYY=";
-        const encryptedFakeLink = "https://t.me/tutorialzonebd";
-        
         function decryptLink(enc) {
-            return atob("aHR0cHM6Ly90Lm1lL2p1YmFpcmZm"); 
+            let recod = 5; 
+            let decoded = atob(enc.split("").reverse().join(""));  
+            let realLink = decoded.split("").map(c => String.fromCharCode(c.charCodeAt(0) - recod)).join("");
+            return realLink;
         }
-        
-        document.getElementById("joinLink").setAttribute("href", decryptLink(encryptedRealLink));
-        document.getElementById("joinLink").setAttribute("target", "_blank");
+
+        document.getElementById("joinTelegram").addEventListener("click", function(event) {
+            event.preventDefault();  
+            let realLink = decryptLink(encryptedLink);
+            window.location.href = "https://" + realLink;
+        });
+
     </script>
 </body>
 </html>
