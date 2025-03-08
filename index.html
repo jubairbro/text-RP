@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Repeater</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 3px solid;
+            border-radius: 10px;
+            background-color: #222;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        textarea, input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        #outputText {
+            cursor: not-allowed;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+            cursor: pointer;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        button:hover {
+            box-shadow: 0 0 15px lime;
+        }
+
+        .join-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: cyan;
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        .join-btn:hover {
+            box-shadow: 0 0 25px lime;
+        }
+
+        @keyframes borderGlow {
+            0% { border-color: red; box-shadow: 0 0 10px red; }
+            20% { border-color: yellow; box-shadow: 0 0 10px yellow; }
+            40% { border-color: lime; box-shadow: 0 0 10px lime; }
+            60% { border-color: cyan; box-shadow: 0 0 10px cyan; }
+            80% { border-color: blue; box-shadow: 0 0 10px blue; }
+            100% { border-color: magenta; box-shadow: 0 0 10px magenta; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Repeater</h1>
+        
+        <textarea id="inputText" placeholder="Enter your text..."></textarea>
+        <input type="number" id="repeatCount" placeholder="Enter repeat count">
+        
+        <button onclick="repeatText()">Repeat</button>
+        
+        <textarea id="outputText" readonly placeholder="Output will appear here..."></textarea>
+        <button onclick="copyText()">Copy Text</button>
+        
+        <a href="https://t.me/jubairff" target="_blank" class="join-btn">Join Telegram</a>
+    </div>
+
+    <script>
+        function repeatText() {
+            let text = document.getElementById("inputText").value;
+            let count = parseInt(document.getElementById("repeatCount").value);
+            
+            if (!text || isNaN(count) || count <= 0) {
+                alert("Please enter valid text and a repeat count.");
+                return;
+            }
+            
+            let output = (text + "\n").repeat(count);
+            document.getElementById("outputText").value = output;
+        }
+
+        function copyText() {
+            let outputText = document.getElementById("outputText");
+            outputText.select();
+            document.execCommand("copy");
+            alert("Text copied!");
+        }
+    </script>
+</body>
+</html>
