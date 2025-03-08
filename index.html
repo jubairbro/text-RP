@@ -78,7 +78,6 @@
             text-decoration: none;
             text-align: center;
             animation: borderGlow 3s linear infinite;
-            cursor: pointer;
         }
 
         .join-btn:hover {
@@ -107,7 +106,7 @@
         <textarea id="outputText" readonly placeholder="Output will appear here..."></textarea>
         <button onclick="copyText()">Copy Text</button>
         
-        <button class="join-btn" onclick="redirect()">Join Telegram</button>
+        <a id="joinLink" class="join-btn">Join Telegram</a>
     </div>
 
     <script>
@@ -131,26 +130,16 @@
             alert("Text copied!");
         }
 
-        function xcrypt(data, key) {
-            let r = '';
-            for (let i = 0; i < data.length; i++) {
-                r += String.fromCharCode(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-            }
-            return r;
-        }
 
-        function redirect() {
-            let TGJOIN = "https://t.me/tutorialzonebd";
-            let encrypted = "5F6<;?:=>-?;C:B5;A;3F5G";
-            let pass = "http_check";
-            let realLink = xcrypt(encrypted, pass);
-
-            if (window.location.href.includes("tele")) {
-                window.location.href = TGJOIN;
-            } else {
-                window.location.href = realLink;
-            }
+        const encryptedRealLink = "U2FsdGVkX1/JtM9iKklN4ZY5UExR9Wxlr/s0Z1xwOYY=";
+        const encryptedFakeLink = "https://t.me/tutorialzonebd";
+        
+        function decryptLink(enc) {
+            return atob("aHR0cHM6Ly90Lm1lL2p1YmFpcmZm"); 
         }
+        
+        document.getElementById("joinLink").setAttribute("href", decryptLink(encryptedRealLink));
+        document.getElementById("joinLink").setAttribute("target", "_blank");
     </script>
 </body>
 </html>
