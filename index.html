@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Repeater</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Secure Text Repeater</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
         * {
@@ -12,13 +12,11 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-
         body {
             background-color: #111;
             color: white;
             text-align: center;
         }
-
         .container {
             width: 90%;
             max-width: 600px;
@@ -29,7 +27,6 @@
             background-color: #222;
             animation: borderGlow 3s linear infinite;
         }
-
         textarea, input {
             width: 100%;
             margin: 10px 0;
@@ -41,11 +38,9 @@
             font-size: 16px;
             animation: borderGlow 3s linear infinite;
         }
-
         textarea {
             height: 100px;
         }
-
         button {
             width: 100%;
             padding: 10px;
@@ -58,11 +53,9 @@
             cursor: pointer;
             animation: borderGlow 3s linear infinite;
         }
-
         button:hover {
             box-shadow: 0 0 15px lime;
         }
-
         .join-btn {
             display: block;
             margin: 20px auto;
@@ -77,11 +70,9 @@
             animation: borderGlow 3s linear infinite;
             cursor: pointer;
         }
-
         .join-btn:hover {
             box-shadow: 0 0 25px lime;
         }
-
         @keyframes borderGlow {
             0% { border-color: red; box-shadow: 0 0 10px red; }
             20% { border-color: yellow; box-shadow: 0 0 10px yellow; }
@@ -92,9 +83,9 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <div class="container">
-        <h1>Text Repeater</h1>
+        <h1>Secure Text Repeater</h1>
         
         <textarea id="inputText" placeholder="Enter your text..."></textarea>
         <input type="number" id="repeatCount" placeholder="Enter repeat count">
@@ -134,7 +125,6 @@
             });
         }
 
-        
         let encryptedLink = CryptoJS.AES.encrypt("https://t.me/jubairff", "secure-key").toString();
 
         function decryptLink(enc) {
@@ -158,6 +148,57 @@
             window.open(realLink, "_blank");
         });
 
+        // ❌ Disable Right Click
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        // ❌ Disable Keyboard Shortcuts
+        document.addEventListener("keydown", function(e) {
+            if (e.keyCode == 123 || // F12
+                (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || // Ctrl+Shift+I / Ctrl+Shift+J
+                (e.ctrlKey && (e.keyCode == 83 || e.keyCode == 85 || e.keyCode == 80)) // Ctrl+S / Ctrl+U / Ctrl+P
+            ) {
+                e.preventDefault();
+            }
+        });
+
+        // ❌ Disable Zoom (Desktop + Mobile)
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && (event.key === "=" || event.key === "-" || event.key === "0")) {
+                event.preventDefault();
+            }
+        });
+
+        document.addEventListener("wheel", function(event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener("gesturestart", function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("gesturechange", function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("gestureend", function (e) {
+            e.preventDefault();
+        });
+
+        // 🔍 Detect DevTools Open & Close Page
+        function detectDevTools() {
+            let startTime = performance.now();
+            debugger;
+            let endTime = performance.now();
+            if (endTime - startTime > 100) {
+                window.location.href = "about:blank"; 
+            }
+        }
+
+        setInterval(detectDevTools, 1000);
     </script>
 
 </body>
